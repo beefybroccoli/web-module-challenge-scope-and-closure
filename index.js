@@ -89,7 +89,6 @@ function inning(){
 //   }
 //   console.log(`task 2 - counter_0 = ${counter_0}, counter_1 = ${counter_1}, counter_2 = ${counter_2}, counter_3 = ${counter_3}`);
 // }
-
 // test_task_2_inning();
 
 
@@ -179,18 +178,21 @@ Use the scoreboard function below to do the following:
 function scoreboard(getInningScore,inning, number_of_innings) {
   var score_board = {"Away":0,"Home":0};
   var array_history = [];
-  var var_index = 0;
   var temp_score;
 
   // 4. Return an array where each of it's index values equals a string stating the
   // Home and Away team's scores for each inning.  Not the cummulative score.
   for (let i = 0; i < number_of_innings; i++){
     
+    //store a new score
     temp_score = getInningScore(inning);
     
+    //push current score into array_history
     array_history.push(`Inning ${i+1}: Away ${temp_score.Away} - Home ${temp_score.Home}`);
 
+    //update score
     score_board.Away += temp_score.Away;
+    //update score
     score_board.Home += temp_score.Home;
   }
 
