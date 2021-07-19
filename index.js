@@ -179,6 +179,8 @@ Use the scoreboard function below to do the following:
 function scoreboard(getInningScore,inning, number_of_innings) {
   var var_final_score = {"Away":0,"Home":0};
   var var_array_object = [];
+  var var_array_string = [];
+  var var_index = 0;
 
   // 4. Return an array where each of it's index values equals a string stating the
   // Home and Away team's scores for each inning.  Not the cummulative score.
@@ -203,26 +205,21 @@ function scoreboard(getInningScore,inning, number_of_innings) {
   var var_final_statement = var_final_score.Away === var_final_score.Home ? "This game will require extra innings: " : "Final Score: ";
 
   var_final_statement = var_final_statement + `Away ${var_final_score.Away} - Home ${var_final_score.Home}`;
-  console.log(var_final_statement);
+
+  // debug
+  // console.log(var_final_statement);
 
   //debug
-  console.log(var_array_object);
+  // console.log(var_array_object);
 
 
   //construct array_string
-  var var_array_string = [];
-  var var_index = 0;
   var_array_object.forEach ( (element) => {
     var_array_string.push(`Inning ${var_index+1}: Away ${element.Away} - Home ${element.Home}`);
   });
   var_array_string.push(var_final_statement);
 
   console.log(var_array_string);
-    
-  
-  
-
-
 
 }
 
