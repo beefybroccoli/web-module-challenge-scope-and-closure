@@ -176,9 +176,9 @@ Use the scoreboard function below to do the following:
   */
 
 function scoreboard(getInningScore,inning, number_of_innings) {
-  var score_board = {"Away":0,"Home":0};
-  var array_history = [];
-  var temp_score;
+  let score_board = {"Away":0,"Home":0};
+  let array_history = [];
+  let temp_score;
 
   // 4. Return an array where each of it's index values equals a string stating the
   // Home and Away team's scores for each inning.  Not the cummulative score.
