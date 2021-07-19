@@ -39,45 +39,49 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-// function helper_inning () {
-//   return Math.floor(Math.random()*3);
-// } 
 
-// function helper_get_InningScore(helper_inning){
-//   return {"Away": helper_inning(),"Home":helper_inning()}
-// }
-
-// function helper_update_score(vscore_board, current_score){
-//   score_board.home += current_score.home;
-//   score_board.Away += current_score.Away
-// }
-
-function gameboard(input_repetition){
-  let score_board = {"Away":0,"Home":0};
-  let current_score;
-  let array_history = [];
-  let index;
-
+  //generate random number, 0, 1 or 2
   const helper_inning = () => Math.floor(Math.random()*3);
 
+  //crate score, i.e. {"Away":0,"Home":1}
   const helper_helper_get_InningScore = () => {
     return {"Away": helper_inning(),"Home":helper_inning()}; 
   }
 
-  const helper_update_score = () => {
+  //update score_board
+  const helper_update_score = (score_board, current_score) => {
     score_board.Home += current_score.Home;
     score_board.Away += current_score.Away;
   }
 
+function mini_PC_gameboard(input_repetition, helper_helper_get_InningScore, helper_update_score){
+  //variables for mini_PC_gameboard function
+  var score_board = {"Away":0,"Home":0};
+  var current_score;
+  var array_history = [];
+  var index;
+
+
+  //update array_history
+  // [
+  //   "Inning 1: Away 1 - Home 2", 
+  //   "Inning 2: Away 2 - Home 1",
+  //   "Inning 3: Away 0 - Home 2", 
+  // ]
   const helper_update_array_history = () =>  {
     array_history.push(`Inning ${index + 1}: Away ${current_score.Away} -  Home ${current_score.Home}`);
   }
 
   const helper_push_final_statement = () => {
 
+    //push below statement into array_history
+    //"This game will require extra innings: Away 10 - Home 10"
     if (score_board.Away === score_board.Home) {
       array_history.push( "This game will require extra innings: " + `Away ${score_board.Away} - Home ${score_board.Home}`);
-    } else{
+    } 
+    //push below statement into array_history
+    //"Final Score: Away 11 - Home 12" 
+    else{
       array_history.push("Final Score: " + `Away ${score_board.Away} - Home ${score_board.Home}`);
     }
   
@@ -89,7 +93,7 @@ function gameboard(input_repetition){
     current_score = helper_helper_get_InningScore();
 
     //update score_board
-    helper_update_score();
+    helper_update_score(score_board, current_score);
 
     //update array_history
     helper_update_array_history();
@@ -101,4 +105,9 @@ function gameboard(input_repetition){
 
 }//end gameboard
 
-gameboard(10);
+mini_PC_gameboard(0, helper_helper_get_InningScore, helper_update_score);
+
+mini_PC_gameboard(5, helper_helper_get_InningScore, helper_update_score);
+
+mini_PC_gameboard(10, helper_helper_get_InningScore, helper_update_score);
+
