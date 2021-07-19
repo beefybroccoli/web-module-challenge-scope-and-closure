@@ -55,12 +55,12 @@ function counter2() {
   return count++;
 }// end counter2 code
 
-console.log("task 1 - " + "miniComputer() return " + miniComputer());
-console.log("task 1 - " + "miniComputer() return " + miniComputer());
-console.log("task 1 - " + "miniComputer() return " + miniComputer());
-console.log("task 1 - " + "counter2() return " + counter2())
-console.log("task 1 - " + "counter2() return " + counter2())
-console.log("task 1 - " + "counter2() return " + counter2())
+// console.log("task 1 - " + "miniComputer() return " + miniComputer());
+// console.log("task 1 - " + "miniComputer() return " + miniComputer());
+// console.log("task 1 - " + "miniComputer() return " + miniComputer());
+// console.log("task 1 - " + "counter2() return " + counter2())
+// console.log("task 1 - " + "counter2() return " + counter2())
+// console.log("task 1 - " + "counter2() return " + counter2())
 
 /* ⚾️⚾️⚾️ Task 2: inning() ⚾️⚾️⚾️
 Use the inning function below to do the following:
@@ -75,22 +75,22 @@ function inning(){
     return Math.floor(Math.random()*3);
 }
 
-function test_task_2_inning(){
-  var counter_0 = 0;
-  var counter_1 = 0;
-  var counter_2 = 0;
-  var counter_3 = 0;
-  for (let i=0; i < 1000000;i++){
-    var temp = inning();
-    if (temp === 0) {counter_0++;}
-    else if (temp === 1) {counter_1++;}
-    else if (temp === 2) {counter_2++;}
-    else if (temp === 3) {counter_3++;}
-  }
-  console.log(`task 2 - counter_0 = ${counter_0}, counter_1 = ${counter_1}, counter_2 = ${counter_2}, counter_3 = ${counter_3}`);
-}
+// function test_task_2_inning(){
+//   var counter_0 = 0;
+//   var counter_1 = 0;
+//   var counter_2 = 0;
+//   var counter_3 = 0;
+//   for (let i=0; i < 1000000;i++){
+//     var temp = inning();
+//     if (temp === 0) {counter_0++;}
+//     else if (temp === 1) {counter_1++;}
+//     else if (temp === 2) {counter_2++;}
+//     else if (temp === 3) {counter_3++;}
+//   }
+//   console.log(`task 2 - counter_0 = ${counter_0}, counter_1 = ${counter_1}, counter_2 = ${counter_2}, counter_3 = ${counter_3}`);
+// }
 
-test_task_2_inning();
+// test_task_2_inning();
 
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
@@ -108,17 +108,16 @@ Use the finalScore function below to do the following:
 */ 
 
 function finalScore(inning, number_of_innings){
-  var result = {"Home":0, "Away":0};
-  for (let i =0; i < number_of_innings; i++){
-    var temp = inning();
-    result.Home = temp === 1 ? result.Home += 1 : result.Home;
-    result.Away = temp === 2 ? result.Away += 1 : result.Away; 
+  var result = {"Away":0, "Home":0};
+  for (let i = 0; i < number_of_innings; i++){
+    result.Home += inning();
+    result.Away += inning();
   }
-  console.log(result);
+  // console.log(result);
   return result;
 }
 
-console.log("task 3 - finalScore(inning, 100) return " + finalScore(inning, 100));
+// console.log("task 3 - finalScore(inning, 100) return " + finalScore(inning, 100));
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
@@ -126,15 +125,14 @@ Use the getInningScore() function below to do the following:
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
 function getInningScore(inning) {
-  var temp = inning();
-  return {"Home":temp === 1? 1:0 , "Away": temp === 2? 1:0}
+  return {"Away": inning(),"Home":inning()}
 }
 
-console.log(`task 4 - getInningScore(inning) return ${getInningScore(inning)}`);
-for (let i = 0; i < 10; i++){
-  let temp = getInningScore(inning);
-  console.log(temp);
-}
+// console.log(`task 4 - getInningScore(inning) return ${getInningScore(inning)}`);
+// for (let i = 0; i < 10; i++){
+//   let temp = getInningScore(inning);
+//   console.log(temp);
+// }
 
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
@@ -178,16 +176,57 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-
-// 4. Return an array where each of it's index values equals a string stating the
-// Home and Away team's scores for each inning.  Not the cummulative score.
-// 5. If there's a tie at the end of the innings, add this message containing the score to the end of the array:  "This game will require extra innings: Away 12 - Home 12"  (see tie example below)
-//    If there isn't a tie, add this message to the end of the array: "Final Score: Away 13 - Home 11"  (see no tie example below)
 function scoreboard(getInningScore,inning, number_of_innings) {
-  /* CODE HERE */
+  var var_final_score = {"Away":0,"Home":0};
+  var var_array_object = [];
+
+  // 4. Return an array where each of it's index values equals a string stating the
+  // Home and Away team's scores for each inning.  Not the cummulative score.
+  for (let i = 0; i < number_of_innings; i++){
+    var_array_object.push(getInningScore(inning));
+  }
+
+  //debug
+  // console.log(array);
+
+  //tally up the score
+  var_array_object.forEach( (element) => {
+    var_final_score.Away += element.Away;
+    var_final_score.Home += element.Home;
+  });
+
+  //debug
+  // console.log(final_score);
+
+  // 5. If there's a tie at the end of the innings, add this message containing the score to the end of the array:  "This game will require extra innings: Away 12 - Home 12"  (see tie example below)
+  //    If there isn't a tie, add this message to the end of the array: "Final Score: Away 13 - Home 11"  (see no tie example below)
+  var var_final_statement = var_final_score.Away === var_final_score.Home ? "This game will require extra innings: " : "Final Score: ";
+
+  var_final_statement = var_final_statement + `Away ${var_final_score.Away} - Home ${var_final_score.Home}`;
+  console.log(var_final_statement);
+
+  //debug
+  console.log(var_array_object);
+
+
+  //construct array_string
+  var var_array_string = [];
+  var var_index = 0;
+  var_array_object.forEach ( (element) => {
+    var_array_string.push(`Inning ${var_index+1}: Away ${element.Away} - Home ${element.Home}`);
+  });
+  var_array_string.push(var_final_statement);
+
+  console.log(var_array_string);
+    
+  
+  
+
+
+
 }
 
-
+scoreboard(getInningScore,inning, 5);
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
