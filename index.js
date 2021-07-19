@@ -16,7 +16,7 @@
 function processFirstItem(stringList, callback) {
   return callback(stringList[0])
 }
-console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
+// console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
 
 // ⭐️ Example Challenge END ⭐️
 
@@ -28,30 +28,39 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
+      counter1 function is a closure, like a mini computer that remember count variable as its internal variable
+      counter2 function is a function that reach out to get counter variable through mechanism of closure.
   
   2. Which of the two uses a closure? How can you tell?
+      counter1 function is aclosure since it store counter variable as its internal state.
   
-  3. In what scenario would the counter1 code be preferable? In what scenario would 
-     counter2 be better?  
+  3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better?
+      counter1 code is better for isolated virtual mini computer, like VM.
+      counter2 code is better for general purpose function and reusable code.
 */
 
 // counter1 code
 function counterMaker() {
   let count = 0;
-  return function counter() {
-   return count++;
-  }
-}
+  return function counter() {return count++;}
+} // end // counter1 code
 
 const counter1 = counterMaker();
+const miniComputer = counterMaker();
 
 // counter2 code
 let count = 0;
 
 function counter2() {
   return count++;
-}
+}// end counter2 code
 
+// console.log("task 1 - " + "miniComputer() return " + miniComputer());
+// console.log("task 1 - " + "miniComputer() return " + miniComputer());
+// console.log("task 1 - " + "miniComputer() return " + miniComputer());
+// console.log("task 1 - " + "counter2() return " + counter2())
+// console.log("task 1 - " + "counter2() return " + counter2())
+// console.log("task 1 - " + "counter2() return " + counter2())
 
 /* ⚾️⚾️⚾️ Task 2: inning() ⚾️⚾️⚾️
 Use the inning function below to do the following:
@@ -62,9 +71,26 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+    return Math.floor(Math.random()*3);
 }
+
+// function test_task_2_inning(){
+//   var counter_0 = 0;
+//   var counter_1 = 0;
+//   var counter_2 = 0;
+//   var counter_3 = 0;
+//   for (let i=0; i < 1000000;i++){
+//     var temp = inning();
+//     if (temp === 0) {counter_0++;}
+//     else if (temp === 1) {counter_1++;}
+//     else if (temp === 2) {counter_2++;}
+//     else if (temp === 3) {counter_3++;}
+//   }
+//   console.log(`task 2 - counter_0 = ${counter_0}, counter_1 = ${counter_1}, counter_2 = ${counter_2}, counter_3 = ${counter_3}`);
+// }
+
+// test_task_2_inning();
 
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
@@ -81,18 +107,32 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+function finalScore(inning, number_of_innings){
+  var result = {"Away":0, "Home":0};
+  for (let i = 0; i < number_of_innings; i++){
+    result.Home += inning();
+    result.Away += inning();
+  }
+  console.log(result);
+  return result;
 }
+
+console.log("task 3 - finalScore(inning, 100) return " + finalScore(inning, 100));
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inning) {
+  return {"Away": inning(),"Home":inning()}
 }
+
+// console.log(`task 4 - getInningScore(inning) return ${getInningScore(inning)}`);
+// for (let i = 0; i < 10; i++){
+//   let temp = getInningScore(inning);
+//   console.log(temp);
+// }
 
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
@@ -136,16 +176,59 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(getInningScore,inning, number_of_innings) {
+  var var_final_score = {"Away":0,"Home":0};
+  var var_array_object = [];
+  var var_array_string = [];
+  var var_index = 0;
+
+  // 4. Return an array where each of it's index values equals a string stating the
+  // Home and Away team's scores for each inning.  Not the cummulative score.
+  for (let i = 0; i < number_of_innings; i++){
+    var_array_object.push(getInningScore(inning));
+  }
+
+  //debug
+  // console.log(array);
+
+  //tally up the score
+  var_array_object.forEach( (element) => {
+    var_final_score.Away += element.Away;
+    var_final_score.Home += element.Home;
+  });
+
+  //debug
+  // console.log(final_score);
+
+  // 5. If there's a tie at the end of the innings, add this message containing the score to the end of the array:  "This game will require extra innings: Away 12 - Home 12"  (see tie example below)
+  //    If there isn't a tie, add this message to the end of the array: "Final Score: Away 13 - Home 11"  (see no tie example below)
+  var var_final_statement = var_final_score.Away === var_final_score.Home ? "This game will require extra innings: " : "Final Score: ";
+
+  var_final_statement = var_final_statement + `Away ${var_final_score.Away} - Home ${var_final_score.Home}`;
+
+  // debug
+  // console.log(var_final_statement);
+
+  //debug
+  // console.log(var_array_object);
+
+
+  //construct array_string
+  var_array_object.forEach ( (element) => {
+    var_array_string.push(`Inning ${var_index+1}: Away ${element.Away} - Home ${element.Home}`);
+  });
+  var_array_string.push(var_final_statement);
+
+  console.log(var_array_string);
+
 }
 
-
+scoreboard(getInningScore,inning, 5);
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
 function foo(){
-  console.log('its working');
+  // console.log('its working');
   return 'bar';
 }
 foo();
@@ -159,3 +242,45 @@ module.exports = {
   getInningScore,
   scoreboard,
 }
+
+
+/* ⚾️⚾️⚾️ Task 6: scoreboard() using closure⚾️⚾️⚾️
+Use the scoreboard function below to do the following:
+  1. Receive the callback function `getInningScore` from Task 4
+  2. Receive the callback function `inning` from Task 2
+  3. Receive a number of innings to be played
+  4. Return an array where each of it's index values equals a string stating the
+  Home and Away team's scores for each inning.  Not the cummulative score.
+  5. If there's a tie at the end of the innings, add this message containing the score to the end of the array:  "This game will require extra innings: Away 12 - Home 12"  (see tie example below)
+     If there isn't a tie, add this message to the end of the array: "Final Score: Away 13 - Home 11"  (see no tie example below)
+  
+  NO TIE example: invoking scoreboard(getInningScore,inning, 9) might return 
+  an array of strings like this:
+[
+  "Inning 1: Away 1 - Home 2", 
+  "Inning 2: Away 2 - Home 1",
+  "Inning 3: Away 0 - Home 2", 
+  "Inning 4: Away 2 - Home 2", 
+  "Inning 5: Away 2 - Home 0", 
+  "Inning 6: Away 1 - Home 1", 
+  "Inning 7: Away 0 - Home 2", 
+  "Inning 8: Away 2 - Home 2",
+  "Inning 9: Away 1 - Home 0", 
+  "Final Score: Away 11 - Home 12"  
+]
+
+  TIE example: invoking scoreboard(getInningScore,inning, 9) might return 
+  an array of strings like this:
+[
+  "Inning 1: Away 1 - Home 1", 
+  "Inning 2: Away 2 - Home 2",
+  "Inning 3: Away 1 - Home 0", 
+  "Inning 4: Away 1 - Home 2", 
+  "Inning 5: Away 0 - Home 0", 
+  "Inning 6: Away 2 - Home 1", 
+  "Inning 7: Away 0 - Home 2", 
+  "Inning 8: Away 2 - Home 1",
+  "Inning 9: Away 1 - Home 1", 
+  "This game will require extra innings: Away 10 - Home 10"
+]  
+  */
